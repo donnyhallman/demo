@@ -13,14 +13,18 @@ pipeline {
 	  
 	  
 	  stage('Analysis'){
-	  	sh './gradlew check -x test'
-	  	def pmd = scanForIssues tool: [$class: 'Pmd'], pattern: '**/reports/pmd/*.xml'
-        publishIssues issues:[pmd]
+	    steps{
+	        sh './gradlew check -x test'
+		  	def pmd = scanForIssues tool: [$class: 'Pmd'], pattern: '**/reports/pmd/*.xml'
+	        publishIssues issues:[pmd]
+	    }
 	  }
     
       stage('Test'){
-	  	sh './gradlew check -x pmdMain'
-	  	
+       	steps{  
+	  		sh './gradlew check -x pmdMain'	  
+       	}
+
 	  }
 	   
  
