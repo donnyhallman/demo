@@ -3,7 +3,7 @@
 pipeline {
     agent any
 	stages {
-	   node{
+	   
 		  stage('Compile') {
     	   steps {
    	       	  checkout scm
@@ -13,7 +13,7 @@ pipeline {
     	}
 	       
 
-	   }
+	   
  
 	    
 
