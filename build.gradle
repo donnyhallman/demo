@@ -16,6 +16,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'eclipse'
 apply plugin: 'org.liquibase.gradle'
+apply plugin: 'pmd'
 
 
 group = 'com.example'
@@ -36,4 +37,25 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	
 	liquibaseRuntime 'org.liquibase:liquibase-core:3.6.1'
+}
+
+pmd{
+  	sourceSets = [sourceSets.main]
+  	reportsDir = file("$project.buildDir/reports/pmd")
+  	ruleSets = [
+            'java-basic',
+            'java-braces',
+            'java-clone',
+            'java-codesize',
+            'java-coupling',
+            'java-empty',
+            'java-finalizers',
+            'java-imports',
+            'java-optimizations',
+            'java-strictexception',
+            'java-strings',
+            'java-typeresolution',
+            'java-unnecessary',
+            'java-unusedcode'
+    ]
 }
