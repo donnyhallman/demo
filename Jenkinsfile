@@ -14,9 +14,19 @@ pipeline {
 	  
 	  
 	  stage('Analysis'){
-	    steps{
-	        sh './gradlew check -x test --continue'
-		  	recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [pmdParser(pattern: '**/reports/pmd/*.xml')], unhealthy: 8
+	   parallel {
+   	     stage('PMD'){
+   	         sh './gradlew pmdMain --continue'
+		  	recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [pmdParser(pattern: '**/reports/pmd/*.xml')], unhealthy: 8    
+   	     }
+		 stage('SpotBugs'){
+   	         sh './gradlew spotbugsMain --continue'
+		  	 recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [spotBugs(pattern: '**/reports/spotbugs/*.xml', useRankAsPriority: true)], unhealthy: 8
+   	     }
+   	   }
+
+	    steps {
+	        
 	    }
 	  }
     
@@ -28,7 +38,4 @@ pipeline {
 	  }
 
 	}
-
-	
-
 }
