@@ -16,7 +16,7 @@ pipeline {
 	  stage('Analysis'){
 	    steps{
 	        sh './gradlew check -x test --continue'
-		  	recordIssues enabledForFailure: true, healthy: 3, minimumSeverity: 'NORMAL', tools: [pmdParser(pattern: '**/reports/pmd/*.xml')], unhealthy: 8
+		  	recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [pmdParser(pattern: '**/reports/pmd/*.xml')], unhealthy: 8
 	    }
 	  }
     
