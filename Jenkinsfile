@@ -30,7 +30,7 @@ pipeline {
    	     }
 	      stage('Test'){
 	       	steps{  
-		  		sh './gradlew test --continue'
+		  		sh './gradlew cleanTest test --continue'
 		  		junit '*/build/test-results/*.xml'  
 	       	}
 	
