@@ -16,18 +16,20 @@ pipeline {
 	  stage('Analysis'){
 	   parallel {
    	     stage('PMD'){
+   	        steps{   	            
    	         sh './gradlew pmdMain --continue'
 		  	recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [pmdParser(pattern: '**/reports/pmd/*.xml')], unhealthy: 8    
+   	        }
+
    	     }
 		 stage('SpotBugs'){
+		    steps{
    	         sh './gradlew spotbugsMain --continue'
 		  	 recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [spotBugs(pattern: '**/reports/spotbugs/*.xml', useRankAsPriority: true)], unhealthy: 8
+		   }
    	     }
    	   }
 
-	    steps {
-	        
-	    }
 	  }
     
       stage('Test'){
