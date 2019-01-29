@@ -13,31 +13,32 @@ pipeline {
 	  }
 	  
 	  
-	  stage('Analysis'){
+	  stage('Analysis & Test'){
 	   parallel {
-   	     stage('PMD'){
+   	     stage('Analysis: PMD'){
    	        steps{   	            
    	         sh './gradlew pmdMain --continue'
 		  	recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [pmdParser(pattern: '**/reports/pmd/*.xml')], unhealthy: 8    
    	        }
 
    	     }
-		 stage('SpotBugs'){
+		 stage('Analysis: SpotBugs'){
 		    steps{
    	         sh './gradlew spotbugsMain --continue'
 		  	 recordIssues healthy: 3, ignoreQualityGate: true, minimumSeverity: 'NORMAL', tools: [spotBugs(pattern: '**/reports/spotbugs/*.xml', useRankAsPriority: true)], unhealthy: 8
 		   }
    	     }
+	      stage('Test'){
+	       	steps{  
+		  		sh './gradlew test --continue'
+		  		junit '*/build/test-results/*.xml'  
+	       	}
+	
+		  }
    	   }
 
 	  }
     
-      stage('Test'){
-       	steps{  
-	  		sh './gradlew check -x pmdMain --continue'	  
-       	}
-
-	  }
 
 	}
 }
