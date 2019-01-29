@@ -42,6 +42,7 @@ dependencies {
 pmd{
   	sourceSets = [sourceSets.main]
   	reportsDir = file("$project.buildDir/reports/pmd")
+  	ignoreFailures = true
   	ruleSets = [
             'java-basic',
             'java-braces',
