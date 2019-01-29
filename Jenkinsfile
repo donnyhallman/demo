@@ -6,7 +6,8 @@ pipeline {
 	   
 	  stage('Build: Compile') {
 	   steps {
-       	  checkout scm
+       	  //checkout scm
+       	  git url: 'https://github.com/donnyhallman/demo.git'
        	  sh './gradlew clean build -x test -x check'
        }
 	  }
@@ -15,8 +16,7 @@ pipeline {
 	  stage('Analysis'){
 	    steps{
 	        sh './gradlew check -x test'
-		  	def pmd = scanForIssues tool: [$class: 'Pmd'], pattern: '**/reports/pmd/*.xml'
-	        publishIssues issues:[pmd]
+		  	recordIssues enabledForFailure: true, healthy: 3, minimumSeverity: 'NORMAL', tools: [pmdParser(pattern: '**/reports/pmd/*.xml')], unhealthy: 8
 	    }
 	  }
     
@@ -26,12 +26,9 @@ pipeline {
        	}
 
 	  }
-	   
- 
-	    
 
 	}
 
-
+	
 
 }
