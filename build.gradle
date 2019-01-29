@@ -24,6 +24,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.liquibase.gradle'
 apply plugin: 'pmd'
 apply plugin: "com.github.spotbugs"
+apply plugin: "jacoco"
 
 
 group = 'com.example'
