@@ -2,10 +2,6 @@ buildscript {
 	ext {
 		springBootVersion = '2.1.2.RELEASE'
 	}
-	repositories {
-		mavenCentral()
-		jcenter()
-	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath "org.liquibase:liquibase-gradle-plugin:2.0.1"
@@ -30,11 +26,7 @@ apply plugin: "jacoco"
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
-
-repositories {
-	mavenCentral()
-	jcenter()
-}
+targetCompatibility = '8'
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -53,22 +45,14 @@ pmd{
   	reportsDir = file("$project.buildDir/reports/pmd")
   	ignoreFailures = true
   	ruleSets = [
-            'java-basic',
-            'java-braces',
-            'java-clone',
-            'java-codesize',
-            'java-comments',
-            'java-coupling',
-            'java-design',
-            'java-empty',
-            'java-finalizers',
-            'java-imports',
-            'java-optimizations',
-            'java-strictexception',
-            'java-strings',
-            'java-typeresolution',
-            'java-unnecessary',
-            'java-unusedcode'
+            'category/java/bestpractices.xml',
+            'category/java/codestyle.xml',
+            'category/java/design.xml',
+            'category/java/errorprone.xml',
+            'category/java/multithreading.xml',
+            'category/java/performance.xml',
+            'category/java/security.xml'
+           
     ]
 }
 
