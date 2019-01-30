@@ -42,9 +42,14 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	
 	liquibaseRuntime 'org.liquibase:liquibase-core:3.6.1'
+	liquibaseRuntime 'ch.qos.logback:logback-core:1.2.3'
+	liquibaseRuntime 'ch.qos.logback:logback-classic:1.2.3'
+	liquibaseRuntime 'org.slf4j:slf4j-api:1.7.25'
+  	liquibaseRuntime 'mysql:mysql-connector-java:8.0.14'
 	
-	spotbugs configurations.spotbugsPlugins.dependencies
-    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.8.0'
+	// Commenting out find-sec-bugs until bug is fixed in gradle version 1.6.10
+	//spotbugs configurations.spotbugsPlugins.dependencies
+    //spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.8.0'	
 }
 
 repositories {
@@ -72,4 +77,16 @@ spotbugs{
 	sourceSets = [sourceSets.main]
   	reportsDir = file("$project.buildDir/reports/spotbugs")
   	ignoreFailures = true
+}
+
+liquibase {
+  activities {
+    main {
+      driver demoLiquibaseDriver
+      changeLogFile 'src/main/resources/db/changelog/db.changelog-master.xml'
+      url demoLiquibaseUrl
+      username  demoLiquibaseUser
+      password  demoLiquibasePassword
+    }
+  }
 }
