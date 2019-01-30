@@ -2,6 +2,10 @@ buildscript {
 	ext {
 		springBootVersion = '2.1.2.RELEASE'
 	}
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath "org.liquibase:liquibase-gradle-plugin:2.0.1"
@@ -38,6 +42,11 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	
 	liquibaseRuntime 'org.liquibase:liquibase-core:3.6.1'
+}
+
+repositories {
+	mavenCentral()
+	jcenter()
 }
 
 pmd{
